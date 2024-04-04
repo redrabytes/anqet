@@ -19,7 +19,8 @@
     "axios": "^1.6.8",
     "betterslogs": "^2.0.5",
     "country-code-emoji": "^2.3.0",
-    "fs": "^0.0.1-security"
+    "fs": "^0.0.1-security",
+    "dotenv": "^16.4.5"
   },
   "devDependencies": {}
 }
