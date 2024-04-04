@@ -12,7 +12,7 @@ async function ipinfo(ip) {
         const ipinfo = {
             country: lookup.data['country'] || 'N/A',
             countryCode: lookup.data['countryCode'] || 'N/A',
-            region: lookup.data['region_name'] || 'N/A',
+            region: lookup.data['regionName'] || 'N/A',
             city: lookup.data['city'] || 'N/A',
             lat: lookup.data['lat'] || 'N/A',
             lon: lookup.data['lon'] || 'N/A',
