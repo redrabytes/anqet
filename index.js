@@ -86,7 +86,7 @@ async function ipfingerprints(ip) {
             logger.info("No port scan information available.");
         }
     } catch (err) {
-        logger.error(`Error occured whiled trying to scan ports: ${err.message}`)
+        logger.error(err.message)
     }
 }
 
