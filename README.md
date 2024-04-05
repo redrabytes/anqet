@@ -36,13 +36,15 @@ Botnets represent a significant threat to cybersecurity, as they orchestrate a v
     npm install
     ```
 
+    And you need to install  [RustScan](https://github.com/RustScan/RustScan/wiki/Installation-Guide)
+
 3. **Set up environment variables:**
    
     Create a `.env` file in the root directory and define the following variables:
    
     ```
-    TAGS=mirai,elf
-    IGNORE_TAGS=Mozi
+    URLHAUS_TAGS=mirai,elf
+    URLHAUS_IGNORE_TAGS=Mozi
     ```
 
 4. **Run the script:**
