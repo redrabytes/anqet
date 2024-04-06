@@ -1,7 +1,8 @@
+const logger = require('betterslogs');
 const axios = require('axios');
+const fs = require('fs');
 const { exec } = require('child_process');
 const { countryCodeEmoji } = require('country-code-emoji');
-const logger = require('betterslogs');
 
 const commonPorts = [
     { port: 20, service: 'FTP' },
@@ -40,6 +41,30 @@ const botnetPorts = [
         ...
     */
 ];
+
+module.exports.save = (data) => {
+    var today = new Date();
+    today = today.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
+
+    if (!fs.existsSync('logs/anqet.log')) fs.writeFileSync('logs/anqet.log', `Date: ${today}\n\n`, 'utf-8', (err) => { if (err) throw err });
+    if (fs.existsSync('logs/anqet.log')) {
+        const regex = /\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}:\d{2}/;
+        const fileContent = fs.readFileSync('logs/anqet.log', 'utf-8');
+        const dateString = String(fileContent.match(regex)[0]).split(' ')[0].replace(/\//g, '-');
+        console.log(dateString)
+
+        today = today.split(' ')[0].replace(/\//g, '-');
+        console.log(today)
+
+        if (dateString !== today) {
+            fs.renameSync('logs/anqet.log', `logs/anqet.log.${dateString}`);
+            fs.writeFileSync('logs/anqet.log', `Date: ${today}\n\n${data}`, 'utf-8', (err) => { if (err) throw err });
+        } else {
+            fs.appendFile('logs/anqet.log', data, 'utf-8', (err) => { if (err) throw err });
+        }
+
+    }
+}
 
 module.exports.info = async (ip) => {
 
@@ -87,6 +112,7 @@ module.exports.info = async (ip) => {
 
 
 module.exports.portScan = async (ip, payload) => {
+
     return new Promise((resolve, reject) => {
         exec(`rustscan --range 1-65535 -a ${ip} -g --`, async (err, stdout, stderr) => {
             if (err || stderr || ip.length === 0) {
@@ -116,6 +142,10 @@ module.exports.portScan = async (ip, payload) => {
                     info = await this.info(ip);
                 }
             }
+
+            commonOpenPorts = commonOpenPorts || 'No common ports found';
+            uncommonOpenPorts = uncommonOpenPorts || 'No uncommon ports found';
+
             logger.info(`IP: ${ip} (Payload: ${payload})`);
             logger.info(`AS: ${info.as} (${info.isp})`);
             logger.info(`Country: ${countryCodeEmoji(info.countryCode)}  (${info.country}, ${info.countryCode})`);
@@ -124,9 +154,27 @@ module.exports.portScan = async (ip, payload) => {
             logger.info(`Lat: ${info.lat}`);
             logger.info(`Lon: ${info.lon}`);
             logger.info(``);
-            logger.info(`Common Ports: ${commonOpenPorts || 'No common ports found'}`);
-            logger.info(`Uncommon Ports: ${uncommonOpenPorts || 'No uncommon ports found'}`);
+            logger.info(`Common Ports: ${commonOpenPorts}`);
+            logger.info(`Uncommon Ports: ${uncommonOpenPorts}`);
             logger.info(`--------------------`)
+
+            var date = new Date();
+            date = date.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
+
+            const data = `IP: ${ip}` +
+                `\nAS: ${info.as} (${info.isp})` +
+                `\nCountry: ${countryCodeEmoji(info.countryCode)}  (${info.country}, ${info.countryCode})` +
+                `\nRegion: ${info.region}` +
+                `\nCity: ${info.city}` +
+                `\nLat: ${info.lat}` +
+                `\nLon: ${info.lon}` +
+                `\n` +
+                `\nCommon Ports: ${commonOpenPorts}` +
+                `\nUncommon Ports: ${uncommonOpenPorts}` +
+                `\n--------------------\n`;
+
+            this.save(data);
+
             resolve();
         });
     });
