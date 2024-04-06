@@ -73,8 +73,17 @@ This version is in beta testing. Your feedback is valuable for improving the pro
 - 🚧 Automatic report generation (support: threatfox, ...)
 - 🚧 Malware type detection (mirai, qakbot, cobaltstrike, etc...)
 - 🚧 Exploit to buffer overflowing a mirai botnet
+- 🚧 [Offensive mode (Scanning all the most detected ASNs)](https://github.com/redrabytes/anqet/blob/main/README.md#offensive-mode)
 
 ---
 
+## ⚠️ Warnings ⚠️
+### Offensive mode: 
+- Get the CIDR address to scan the whole ASN to detect potential C2s, this options require a server which allow you to do TCP scanning because you could be confronted to abuse reports. (**DO NOT USE ON HOME CONNECTION !!**)
+
+
 ## Credits
 [redra.](https://twitter.com/redrabytes/) | [abuse.ch](https://twitter.com/abuse_ch)
+
+## Thanks to
+[Wafer4014](https://twitter.com/Wafer4014)
