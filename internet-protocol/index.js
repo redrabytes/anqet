@@ -51,10 +51,8 @@ module.exports.save = (data) => {
         const regex = /\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}:\d{2}/;
         const fileContent = fs.readFileSync('logs/anqet.log', 'utf-8');
         const dateString = String(fileContent.match(regex)[0]).split(' ')[0].replace(/\//g, '-');
-        console.log(dateString)
 
         today = today.split(' ')[0].replace(/\//g, '-');
-        console.log(today)
 
         if (dateString !== today) {
             fs.renameSync('logs/anqet.log', `logs/anqet.log.${dateString}`);
