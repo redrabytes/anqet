@@ -73,7 +73,7 @@ This version is in beta testing. Your feedback is valuable for improving the pro
 - 🚧 Automatic report generation (support: threatfox, ...)
 - 🚧 Malware type detection (mirai, qakbot, cobaltstrike, etc...)
 - 🚧 Exploit to buffer overflowing a mirai botnet
-- 🚧 [Offensive mode (Scanning all the most detected ASNs)](https://github.com/redrabytes/anqet/blob/main/README.md#offensive-mode)
+- 🚧 [Offensive mode (Scanning all the most detected ASNs)](#offensive-mode)
 
 ---
 
